@@ -5,12 +5,12 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV USER root
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ubuntu-desktop && \
-    apt-get install -y gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal && \
-    apt-get install -y tightvncserver && \
-    apt-get install --yes --no-install-recommends vim less build-essential git curl ncurses-dev mc libboost-all-dev rsync tig default-jre-headless cmake firefox terminator &&\
-    rm -rf /var/cache/apt/ && \
+    apt-get install --yes --no-install-recommends apt-utils ubuntu-desktop && \
+    apt-get install --yes --no-install-recommends gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal && \
+    apt-get install --yes --no-install-recommends tightvncserver && \
     mkdir /root/.vnc
+RUN apt-get install --yes --no-install-recommends vim less build-essential git curl ncurses-dev mc libboost-all-dev rsync tig default-jre-headless cmake firefox terminator doxygen graphviz lcov &&\
+    rm -rf /var/cache/apt/
 
 # http://fitnesse.org/fitnesse-standalone.jar?responder=releaseDownload&release=20180127
 COPY fitnesse-standalone.jar /root/
@@ -35,4 +35,4 @@ CMD /usr/bin/vncserver :1 -geometry 1280x800 -depth 24 && tail -f /root/.vnc/*:1
 # WQXGA https://en.wikipedia.org/wiki/1080p#/media/File:Vector_Video_Standards2.svg
 #CMD /usr/bin/vncserver :1 -geometry 2560x1600 -depth 24 && tail -f /root/.vnc/*:1.log
 
-EXPOSE 5901
+EXPOSE 5901 80
